@@ -20,8 +20,8 @@ if(Meteor.isClient){
             console.log(e.results);
             i = e.results.length - 1;
             if (e.results[i].isFinal == true) {
-            console.log(e.results[i].isFinal);
-            Words.insert({name: e.results[i][0].transcript, createdAt: new Date()});
+                console.log(e.results[i].isFinal);
+                processPhrase(e.results[i][0].transcript);
             }
         }
 
@@ -35,9 +35,11 @@ if(Meteor.isClient){
 }
 
 Meteor.startup(function () {
+    //Words.remove({});
     // The correct way
     if(Meteor.isClient){
         recognition.start();
+
     }
 });
 
@@ -55,6 +57,20 @@ if(Meteor.isServer){
 
 Words = new Mongo.Collection("words");
 //console.log(Words);
+
+processPhrase = function (phrase) {
+    if (hasWhiteSpace(phrase) > 0) {
+        wordsArray = phrase.split(" ");
+        var i = 0;
+        for (;wordsArray[i];) {
+            Words.insert({name: wordsArray[i], createdAt: new Date()});
+            i++;
+        }
+    } else {
+        Words.insert({name: phrase, createdAt: new Date()});
+    }
+}
+
 
 //
 
@@ -79,21 +95,11 @@ Router.route('/words', {
     }
 });
 
-Router.route('/mood-feed-good', {
-    name: 'mood-feed-good', //optional
+Router.route('/mood-super-good', {
+    name: 'mood-good', //optional
     where: 'server', //important to make sure that the function is synchronous
     action: function() {
         //console.log(this.request.body);
-        var xmlData = myfeedExport(); //grabs your data
-        this.response.writeHead(200, {'Content-Type': 'application/xml'}); //outputs data to visitor
-        this.response.end(xmlData);
-    }
-});
-
-Router.route('/mood-feed-super-good', {
-    name: 'mood-feed-super-good', //optional
-    where: 'server', //important to make sure that the function is synchronous
-    action: function() {
         var xmlData = myfeedExport(); //grabs your data
         this.response.writeHead(200, {'Content-Type': 'application/xml'}); //outputs data to visitor
         this.response.end(xmlData);
@@ -113,6 +119,11 @@ myfeedExport = function () {
 
     return feed.end({pretty: true})
 }
+
+hasWhiteSpace = function (s) {
+  return s.indexOf(' ') >= 0;
+}
+
 
 /*
 <pingdom_http_custom_check>
