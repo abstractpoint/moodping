@@ -1,0 +1,65 @@
+<head>
+    <title>Words</title>
+</head>
+<body>
+<div class="container">
+<div class="row">
+	<div class="col-md-12">
+		<hr>
+	</div>
+</div>
+{{> words}}
+</div>
+
+
+</body>
+
+<template name="words">
+<div class="row">
+	<div class="col-md-12">
+	
+	<style>
+	span.word {
+		border: 1px #000 solid;
+		background:#fff;
+		border-bottom:3px #000 solid;
+		color:#000;
+/*		border-radius: 5px; 
+		-moz-border-radius: 5px; 
+		-webkit-border-radius: 5px;*/
+		-webkit-box-shadow: 0px 31px 45px -5px rgba(0,0,0,0.10);
+		-moz-box-shadow: 0px 31px 45px -5px rgba(0,0,0,0.10);
+		box-shadow: 0px 31px 45px -5px rgba(0,0,0,0.10);
+		display:inline-block;
+		padding:1em;
+		margin: 5px;
+	}
+
+	span.word.positive {
+		border: 1px #D6CA00 solid;
+		background:#fff000;
+		border-bottom:3px #D6CA00 solid;
+	}
+
+	span.word.negative {
+		border: 1px #D60000 solid;
+		background:#FF0000;
+		border-bottom:3px #D60000 solid;
+	}
+	</style>
+	{{#animate in='transition.shrinkIn' out='transition.shrinkOut'}}
+	{{#each word}}
+		
+		{{> wordItem}}
+		
+	{{/each}}
+	{{/animate}}
+	
+	</div>
+</div>
+<hr>
+</template>
+
+<template name="wordItem">
+	    <span class="word in out" style="display:inline-block;">{{name}}</span>
+</template>
