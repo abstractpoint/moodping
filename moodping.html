@@ -23,9 +23,9 @@
 		background-color:#EFEFEF;
 	}
 	span.word {
-		border: 1px #000 solid;
+		border: 1px #ccc solid;
 		background:#fff;
-		border-bottom:3px #000 solid;
+		border-bottom:3px #ccc solid;
 		color:#000;
 /*		border-radius: 5px; 
 		-moz-border-radius: 5px; 
@@ -45,9 +45,10 @@
 	}
 
 	span.word.negative {
-		border: 1px #D60000 solid;
-		background:#FF0000;
-		border-bottom:3px #D60000 solid;
+		border: 1px #864200 solid;
+		background:#B95C00;
+		border-bottom:3px #864200 solid;
+		color:#000;
 	}
 	</style>
 	{{#animate in='transition.shrinkIn' out='transition.shrinkOut'}}
@@ -64,5 +65,5 @@
 </template>
 
 <template name="wordItem">
-	    <span class="word in out" style="display:inline-block;">{{name}}</span>
+	    <span class="word {{mood}}" style="display:inline-block;">{{name}}</span>
 </template>
