@@ -1,10 +1,10 @@
 if(Meteor.isClient){
     // client code goes here
     Meteor.subscribe("words");
-
+    Meteor.subscribe("publication");
     Template.words.helpers({
         word: function(){
-            return Words.find({},{'limit':20, sort: {createdAt: -1}});
+            return Words.find({},{'limit':50, sort: {createdAt: -1}});
         }
     });
 
@@ -17,11 +17,12 @@ if(Meteor.isClient){
         recognition.interimResults = true;
 
         recognition.onresult = function (e) {
-            console.log(e.results);
+            //console.log(e.results);
             i = e.results.length - 1;
             if (e.results[i].isFinal == true) {
-                console.log(e.results[i].isFinal);
+                console.log(e.results[i][0].transcript);
                 processPhrase(e.results[i][0].transcript);
+                console.log(Counts.get('words'));
             }
         }
 
@@ -39,7 +40,7 @@ Meteor.startup(function () {
     // The correct way
     if(Meteor.isClient){
         recognition.start();
-
+        console.log(Counts.get('words'));
     }
 });
 
@@ -47,9 +48,14 @@ Meteor.startup(function () {
 if(Meteor.isServer){
     // server code goes here
     Meteor.publish("words", function () {
-      return Words.find({},{'limit':20, sort: {createdAt: -1}});
+      return Words.find({},{'limit':50, sort: {createdAt: -1}});
+    });
+
+    Meteor.publish('publication', function() {
+      Counts.publish(this, 'words', Words.find());
     });
 }
+
 
 // DB
 // ##
