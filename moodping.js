@@ -15,6 +15,24 @@ if(Meteor.isClient){
         }
     });
 
+    Template.face.helpers({
+        faceImage: function(){
+
+            happyWords = Words.find({mood: 'positive', createdAt:{ $gte : new Date(moment().subtract(20, 'minutes').format()) }},{'limit':100, sort: {createdAt: -1}}).count();
+            unhappyWords = Words.find({mood: 'negative',createdAt:{ $gte : new Date(moment().subtract(20, 'minutes').format()) }},{'limit':100, sort: {createdAt: -1}}).count();
+            
+            console.log(moment().subtract(20, 'minutes').format());
+            console.log("happy:"+happyWords+" unhappy:"+unhappyWords);
+
+            if (happyWords >= unhappyWords) {
+                return 'happy';   
+            } else {
+                return 'unhappy';  
+            }
+            
+        }
+    });
+
     var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
     console.log(is_chrome);
     if(is_chrome)
@@ -64,16 +82,11 @@ Meteor.startup(function () {
 if(Meteor.isServer){
     // server code goes here
     Meteor.publish("words", function () {
-        return Words.find({}, {'limit':100, sort: {createdAt: -1}});
+        return Words.find({}, {'limit':1000, sort: {createdAt: -1}});
     });
 
     Meteor.publish('publication', function() {
       Counts.publish(this, 'words', Words.find());
-    });
-
-    // must have an allow function on server to use batchInsert() on client.
-    Words.allow({
-      insert: function(){ return true }
     });
 }
 
@@ -119,7 +132,9 @@ processPhrase = function (phrase) {
     });
     console.log(wordsInsert);
     if (wordsInsert) {
-        Words.batchInsert(wordsInsert);
+        _.each(wordsInsert, function(word) {
+            Words.insert(word);
+        });
     }
 }
 
