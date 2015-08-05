@@ -1,10 +1,17 @@
+// DB
+// ##
+// ##
+
+Words = new Mongo.Collection("words");
+//console.log(Words);
+
 if(Meteor.isClient){
     // client code goes here
     Meteor.subscribe("words");
     Meteor.subscribe("publication");
     Template.words.helpers({
         word: function(){
-            return Words.find({},{'limit':50, sort: {createdAt: -1}});
+            return Words.find({},{'limit':100, sort: {createdAt: -1}});
         }
     });
 
@@ -13,24 +20,27 @@ if(Meteor.isClient){
     if(is_chrome)
     {
         var recognition = new webkitSpeechRecognition();
-        recognition.continuous = true;
-        recognition.interimResults = true;
-
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
         recognition.onresult = function (e) {
-            //console.log(e.results);
-            i = e.results.length - 1;
-            if (e.results[i].isFinal == true) {
-                console.log(e.results[i][0].transcript);
-                processPhrase(e.results[i][0].transcript);
-                console.log(Counts.get('words'));
-            }
+            console.log(e.resultIndex);
+            _.each(e.results, function(result, i) {
+                console.log("iteration:"+i);
+                console.log(result);
+                if (result.isFinal == true) {
+                    console.log(result[0].transcript);
+                    processPhrase(result[0].transcript);
+                    console.log(Counts.get('words'));
+                }
+            });
         }
 
-        recognition.onend = function() {
-            recognition.start();
-            console.log('restarting recognition');
+        recognition.addEventListener('end', function () {
+             recognition.start();
+             console.log('restarting recognition');
+        })
 
-        }
     }  
     
 }
@@ -48,30 +58,36 @@ Meteor.startup(function () {
 if(Meteor.isServer){
     // server code goes here
     Meteor.publish("words", function () {
-      return Words.find({},{'limit':50, sort: {createdAt: -1}});
+        return Words.find({}, {'limit':100, sort: {createdAt: -1}});
     });
 
     Meteor.publish('publication', function() {
       Counts.publish(this, 'words', Words.find());
     });
+
+    // must have an allow function on server to use batchInsert() on client.
+    Words.allow({
+      insert: function(){ return true }
+    });
 }
 
 
-// DB
-// ##
-// ##
 
-Words = new Mongo.Collection("words");
-//console.log(Words);
 
 processPhrase = function (phrase) {
     if (hasWhiteSpace(phrase) > 0) {
         wordsArray = phrase.split(" ");
-        var i = 0;
-        for (;wordsArray[i];) {
-            Words.insert({name: wordsArray[i], createdAt: new Date()});
-            i++;
-        }
+        wordsInsert = [];
+        _.each(wordsArray, function(word, index) {
+            
+            if (word == 'of' || word == 'he' || word == 'the' || word == 'a') {
+                wordsInsert.push({name: word, createdAt: new Date()});
+            }
+
+            //wordsInsert.push({name: word, createdAt: new Date()});
+        });
+        console.log(wordsInsert);
+        Words.batchInsert(wordsInsert);
     } else {
         Words.insert({name: phrase, createdAt: new Date()});
     }
