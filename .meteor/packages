@@ -8,7 +8,6 @@ meteor-platform
 insecure
 iron:router
 xmlbuilder
-percolate:momentum
 twbs:bootstrap
 ccorcos:animate
 tmeasday:publish-counts
