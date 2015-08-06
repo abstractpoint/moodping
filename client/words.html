@@ -1,0 +1,16 @@
+<template name="words">
+<div class="row">
+	<div class="col-md-12">
+	
+	{{#animate in='transition.shrinkIn' out='transition.shrinkOut'}}
+	{{#each word}}
+		
+		{{> wordItem}}
+		
+	{{/each}}
+	{{/animate}}
+	
+	</div>
+</div>
+<hr>
+</template>

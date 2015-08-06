@@ -1,0 +1,92 @@
+body {
+	background-color:#EFEFEF;
+}
+hr {
+	border-top: 1px solid #E0E0E0;
+}
+span.word {
+	border: 1px #ccc solid;
+	background:#fff;
+	border-bottom:3px #ccc solid;
+	color:#000;
+/*		border-radius: 5px; 
+	-moz-border-radius: 5px; 
+	-webkit-border-radius: 5px;*/
+	-webkit-box-shadow: 0px 31px 45px -5px rgba(0,0,0,0.10);
+	-moz-box-shadow: 0px 31px 45px -5px rgba(0,0,0,0.10);
+	box-shadow: 0px 31px 45px -5px rgba(0,0,0,0.10);
+	display:inline-block;
+	padding:1em;
+	margin: 5px;
+}
+
+span.word.positive {
+	border: 1px #DACD05 solid;
+	background:#FFF000;
+	border-bottom:3px #DACD05 solid;
+}
+
+span.word.negative {
+	border: 1px #EA3D38 solid;
+	background:#FF4C4C;
+	border-bottom:3px #EA3D38 solid;
+	color:#000;
+}
+img.face {
+	filter: hue-rotate(0deg);
+	-webkit-filter: hue-rotate(0deg);
+	-moz-filter: hue-rotate(0deg);
+	-o-filter: hue-rotate(0deg);
+	-ms-filter: hue-rotate(0deg);
+}
+
+i.fa-smile-o {
+	color:#4B91DE;
+}
+
+i.fa-frown-o {
+	color:#FF4C4C;
+}
+
+span.label-frown {
+	background-color: #FF4C4C;
+	font-size: 1.2em;
+}
+
+span.label-meh {
+	background-color: #777777;
+	font-size: 1.2em;
+}
+
+span.label-smile {
+	background-color: #4B91DE;
+	font-size: 1.2em;
+}
+
+@-webkit-keyframes FACE {
+	0%   { opacity: 0.3; }
+	50% { opacity: 1; }
+	100% { opacity: 0.3; }
+}
+@-moz-keyframes FACE {
+	0%   { opacity: 0.3; }
+	50% { opacity: 1; }
+	100% { opacity: 0.3; }
+}
+@-o-keyframes FACE {
+	0%   { opacity: 0.3; }
+	50% { opacity: 1; }
+	100% { opacity: 0.3; }
+}
+@keyframes FACE {
+	0%   { opacity: 0.3; }
+	50% { opacity: 1; }
+	100% { opacity: 0.3; }
+}
+
+i.fa {
+  -webkit-animation: FACE 5s infinite; /* Safari 4+ */
+  -moz-animation:    FACE 5s infinite; /* Fx 5+ */
+  -o-animation:      FACE 5s infinite; /* Opera 12+ */
+  animation:         FACE 5s infinite; /* IE 10+, Fx 29+ */
+}

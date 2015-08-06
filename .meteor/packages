@@ -11,8 +11,10 @@ xmlbuilder
 percolate:momentum
 twbs:bootstrap
 ccorcos:animate
-force-ssl
 tmeasday:publish-counts
 underscore
 mikowals:batch-insert
 momentjs:moment
+fortawesome:fontawesome
+numeral:numeral
+nourharidy:ssl
