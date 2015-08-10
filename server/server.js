@@ -10,7 +10,3 @@ Meteor.startup(function () {
 Meteor.publish("words", function () {
     return Words.find({}, {'limit':50, sort: {createdAt: -1}});
 });
-
-Meteor.publish('publication', function() {
-  Counts.publish(this, 'words', Words.find());
-});

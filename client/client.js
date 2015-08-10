@@ -1,12 +1,10 @@
 // client code goes here
 Meteor.startup(function () {
-    recognition.start();
-    console.log(Counts.get('words'));
+    if (recognition) { recognition.start(); }
 });
 
 
 Meteor.subscribe("words");
-Meteor.subscribe("publication");
 Template.words.helpers({
     word: function(){
         return Words.find({},{'limit':60, sort: {createdAt: -1}});
