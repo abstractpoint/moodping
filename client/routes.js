@@ -1,0 +1,7 @@
+// ROUTES
+// ######
+// ######
+
+
+FlowRouter.route('/', function(){
+});

@@ -70,26 +70,6 @@ moodPercent = function() {
     return numeral(mood).format('0.000');
 }
 
-myfeedExport = function (percent) {
-
-    if (percent >= 33) {
-        status = "OK";
-    } else {
-        status = "DOWN";
-    }
-
-    var obj = {
-      'pingdom_http_custom_check': {
-        status: status,
-        response_time: percent,
-      }
-    };
-
-    var feed = XmlBuilder.create(obj) //sets up the "parent" xml object
-
-    return feed.end({pretty: true})
-}
-
 hasWhiteSpace = function (s) {
   return s.indexOf(' ') >= 0;
 }
