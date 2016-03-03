@@ -1,4 +1,8 @@
 if(Meteor.isClient){
+    var url = Meteor.absoluteUrl();
+    if (url.search("moodping.meteor.com") != -1) {
+        document.location.href = "https://moodping.abstractpoint.co.uk";
+    }
 }
 if(Meteor.isServer){
 }
