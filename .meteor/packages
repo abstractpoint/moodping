@@ -4,9 +4,6 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-meteor-platform
-insecure
-iron:router
 xmlbuilder
 twbs:bootstrap
 ccorcos:animate
@@ -16,4 +13,20 @@ mikowals:batch-insert
 momentjs:moment
 fortawesome:fontawesome
 numeral:numeral
+kadira:flow-router
+standard-minifiers
+meteor-base
+mobile-experience
+mongo
+blaze-html-templates
+session
+jquery
+tracker
+logging
+reload
+random
+ejson
+spacebars
+check
+meteorhacks:picker
 nourharidy:ssl
